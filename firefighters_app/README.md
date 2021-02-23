@@ -1,6 +1,6 @@
 # firefighters_app
 
-Firefighters alarm that will call them when emergency is redorded. 
+Firefighters alarm that will call them when emergency is recorded.
 
 ## Getting Started
 
