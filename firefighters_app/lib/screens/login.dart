@@ -1,3 +1,6 @@
+import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
+import 'package:firefighters_app/screens/widgets/sign_in_up_field.dart';
+import 'package:firefighters_app/screens/widgets/text_field_container.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,7 +38,7 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 5.0,
+                  height: 10.0,
                 ),
                 TextFieldContainer(
                   child: TextFormField(
@@ -52,13 +55,13 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 5.0,
+                  height: 10.0,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Sign in',
+                      ' Sign in',
                       style: kRedText,
                     ),
                     RoundIconButton(
@@ -66,49 +69,11 @@ class Login extends StatelessWidget {
                     ),
                   ],
                 ),
+                SignInUpField(),
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class TextFieldContainer extends StatelessWidget {
-  TextFieldContainer({this.child});
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: 50.0,
-        decoration: BoxDecoration(
-          color: kInputTextBackgroundColor,
-          border: Border(
-            bottom: BorderSide(color: kMainRedColor),
-          ),
-        ),
-        child: child);
-  }
-}
-
-class RoundIconButton extends StatelessWidget {
-  RoundIconButton({this.iconData, this.onTap});
-
-  final IconData iconData;
-  final Function onTap;
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(iconData),
-      onPressed: onTap,
-      elevation: 6.0,
-      shape: CircleBorder(),
-      fillColor: kMainRedColor,
-      constraints: BoxConstraints.tightFor(
-        width: 57.0,
-        height: 57.0,
       ),
     );
   }
