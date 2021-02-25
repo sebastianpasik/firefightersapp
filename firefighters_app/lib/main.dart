@@ -1,4 +1,6 @@
+import 'package:firefighters_app/screens/home.dart';
 import 'package:firefighters_app/screens/login.dart';
+import 'package:firefighters_app/screens/registration.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +18,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Login(),
+        '/registration': (context) => Registration(),
+        '/home': (context) => Home(),
       },
     );
   }

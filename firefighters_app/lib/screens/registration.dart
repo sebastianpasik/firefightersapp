@@ -3,21 +3,20 @@ import 'package:firefighters_app/screens/widgets/sign_in_up_field.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
-class Login extends StatelessWidget {
+class Registration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Text(
-                'Welcome Back',
+                'Create Account',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 36.0,
@@ -27,7 +26,6 @@ class Login extends StatelessWidget {
               Expanded(
                 child: SvgPicture.asset(
                   'images/undraw_secure_login.svg',
-                  height: size.height * 0.40,
                 ),
               ),
               TextFieldContainer(
@@ -62,11 +60,28 @@ class Login extends StatelessWidget {
               SizedBox(
                 height: 10.0,
               ),
+              TextFieldContainer(
+                child: TextFormField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Repeat Password',
+                    border: InputBorder.none,
+                    icon: Icon(
+                      Icons.vpn_key_rounded,
+                      color: kMainRedColor,
+                    ),
+                    suffixIcon: Icon(Icons.visibility),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    ' Sign in',
+                    ' Sign up',
                     style: kRedText,
                   ),
                   RoundIconButton(
@@ -78,8 +93,9 @@ class Login extends StatelessWidget {
                 ],
               ),
               SignInUpField(
+                login: false,
                 onPress: () {
-                  Navigator.pushNamed(context, '/registration');
+                  Navigator.pop(context);
                 },
               ),
             ],
