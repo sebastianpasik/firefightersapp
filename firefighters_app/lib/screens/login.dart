@@ -72,7 +72,7 @@ class Login extends StatelessWidget {
                   RoundIconButton(
                     child: Icon(Icons.arrow_right_alt),
                     onPress: () {
-                      Navigator.pushNamed(context, '/home');
+                      Navigator.pushNamed(context, '/navigation');
                     },
                   ),
                 ],

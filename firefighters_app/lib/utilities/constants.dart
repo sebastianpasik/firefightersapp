@@ -7,6 +7,7 @@ const kLabelTextStyle = TextStyle(
   fontFamily: 'OpenSans',
 );
 
+const List<String> appBarTitles = ['Emergency', 'Location', 'Settings'];
 const kRedText = TextStyle(
   color: kMainRedColor,
   fontSize: 18.0,
