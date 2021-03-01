@@ -2,8 +2,9 @@ import 'package:firefighters_app/screens/home.dart';
 import 'package:firefighters_app/screens/location.dart';
 import 'package:firefighters_app/screens/login.dart';
 import 'package:firefighters_app/screens/navigation.dart';
+import 'package:firefighters_app/screens/profile.dart';
 import 'package:firefighters_app/screens/registration.dart';
-import 'file:///C:/Users/spasik/dev/firefightersapp/firefighters_app/lib/screens/settings.dart';
+import 'package:firefighters_app/screens/settings.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -18,14 +19,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'OpenSans',
       ),
-      initialRoute: '/',
+      initialRoute: Login.id,
       routes: {
-        '/': (context) => Login(),
-        '/registration': (context) => Registration(),
-        '/home': (context) => Home(),
-        '/navigation': (context) => Navigation(),
-        '/settings': (context) => Settings(),
-        '/location': (context) => Location(),
+        Login.id: (context) => Login(),
+        Registration.id: (context) => Registration(),
+        Home.id: (context) => Home(),
+        Navigation.id: (context) => Navigation(),
+        Settings.id: (context) => Settings(),
+        Location.id: (context) => Location(),
+        Profile.id: (context) => Profile(),
       },
     );
   }

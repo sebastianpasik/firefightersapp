@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 
 class Navigation extends StatefulWidget {
+  static const String id = 'navigation';
   @override
   _NavigationState createState() => _NavigationState();
 }

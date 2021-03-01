@@ -1,3 +1,5 @@
+import 'package:firefighters_app/screens/navigation.dart';
+import 'package:firefighters_app/screens/registration.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/sign_in_up_field.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
@@ -6,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Login extends StatelessWidget {
+  static const String id = 'login';
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -72,14 +76,14 @@ class Login extends StatelessWidget {
                   RoundIconButton(
                     child: Icon(Icons.arrow_right_alt),
                     onPress: () {
-                      Navigator.pushNamed(context, '/navigation');
+                      Navigator.pushNamed(context, Navigation.id);
                     },
                   ),
                 ],
               ),
               SignInUpField(
                 onPress: () {
-                  Navigator.pushNamed(context, '/registration');
+                  Navigator.pushNamed(context, Registration.id);
                 },
               ),
             ],

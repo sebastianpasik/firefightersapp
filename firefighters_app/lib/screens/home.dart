@@ -1,10 +1,11 @@
-import 'package:firefighters_app/screens/widgets/custom_app_bar.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
+  static const String id = 'home';
+
   @override
   Widget build(BuildContext context) {
     return Center(

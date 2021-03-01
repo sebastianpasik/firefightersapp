@@ -1,3 +1,4 @@
+import 'package:firefighters_app/screens/profile.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -12,17 +13,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: kLightGreyBackgroundColor,
       title: Text(
         titleText,
-        style: TextStyle(
-          color: kMainRedColor,
-          fontWeight: FontWeight.bold,
-        ),
+        style: kFatAppBarText,
       ),
       automaticallyImplyLeading: false,
       actions: <Widget>[
         Padding(
           padding: EdgeInsets.only(right: 20.0),
           child: GestureDetector(
-            onTap: () {},
+            onTap: () => Navigator.pushNamed(context, Profile.id),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

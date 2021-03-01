@@ -1,3 +1,4 @@
+import 'package:firefighters_app/screens/home.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/sign_in_up_field.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Registration extends StatelessWidget {
+  static const String id = 'registration';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +89,7 @@ class Registration extends StatelessWidget {
                   RoundIconButton(
                     child: Icon(Icons.arrow_right_alt),
                     onPress: () {
-                      Navigator.pushNamed(context, '/home');
+                      Navigator.pushNamed(context, Home.id);
                     },
                   ),
                 ],
