@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "524330990667",
+    "project_id": "firefighters-app",
+    "storage_bucket": "firefighters-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524330990667:android:1b3fea19f26fc247dbe1ce",
+        "android_client_info": {
+          "package_name": "uk.ac.aber.dcs.sep16.firefighters_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "524330990667-gr6lcdcbr70vfk5g5aut8m3ts0cfb85r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBriMqYZZcNm53QhccmYq9TbzprTwRy2WA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "524330990667-gr6lcdcbr70vfk5g5aut8m3ts0cfb85r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,9 +5,11 @@ import 'package:firefighters_app/screens/widgets/text_field_container.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Registration extends StatelessWidget {
   static const String id = 'registration';
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
