@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firefighters_app/screens/home.dart';
 import 'package:firefighters_app/screens/location.dart';
 import 'package:firefighters_app/screens/login.dart';
@@ -8,7 +9,11 @@ import 'package:firefighters_app/screens/settings.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

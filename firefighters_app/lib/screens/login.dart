@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firefighters_app/screens/navigation.dart';
 import 'package:firefighters_app/screens/registration.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
@@ -7,8 +8,18 @@ import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   static const String id = 'login';
+
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final _auth = FirebaseAuth.instance;
+
+  String email;
+  String password;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +47,12 @@ class Login extends StatelessWidget {
               ),
               TextFieldContainer(
                 child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) {
+                    email = value;
+                  },
                   decoration: InputDecoration(
-                    hintText: 'Username',
+                    hintText: 'Email',
                     border: InputBorder.none,
                     icon: Icon(
                       Icons.person,
@@ -52,6 +67,9 @@ class Login extends StatelessWidget {
               TextFieldContainer(
                 child: TextFormField(
                   obscureText: true,
+                  onChanged: (value) {
+                    password = value;
+                  },
                   decoration: InputDecoration(
                     hintText: 'Password',
                     border: InputBorder.none,
@@ -75,8 +93,17 @@ class Login extends StatelessWidget {
                   ),
                   RoundIconButton(
                     child: Icon(Icons.arrow_right_alt),
-                    onPress: () {
-                      Navigator.pushNamed(context, Navigation.id);
+                    onPress: () async {
+                      try {
+                        final existingUser =
+                            await _auth.signInWithEmailAndPassword(
+                                email: email, password: password);
+                        if (existingUser != null) {
+                          Navigator.pushNamed(context, Navigation.id);
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
                     },
                   ),
                 ],

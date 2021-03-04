@@ -1,4 +1,5 @@
 import 'package:firefighters_app/screens/home.dart';
+import 'package:firefighters_app/screens/navigation.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/sign_in_up_field.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
@@ -7,9 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class Registration extends StatelessWidget {
+class Registration extends StatefulWidget {
   static const String id = 'registration';
+
+  @override
+  _RegistrationState createState() => _RegistrationState();
+}
+
+class _RegistrationState extends State<Registration> {
   final _auth = FirebaseAuth.instance;
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +44,12 @@ class Registration extends StatelessWidget {
               ),
               TextFieldContainer(
                 child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) {
+                    email = value;
+                  },
                   decoration: InputDecoration(
-                    hintText: 'Username',
+                    hintText: 'Email',
                     border: InputBorder.none,
                     icon: Icon(
                       Icons.person,
@@ -50,6 +64,9 @@ class Registration extends StatelessWidget {
               TextFieldContainer(
                 child: TextFormField(
                   obscureText: true,
+                  onChanged: (value) {
+                    password = value;
+                  },
                   decoration: InputDecoration(
                     hintText: 'Password',
                     border: InputBorder.none,
@@ -90,8 +107,17 @@ class Registration extends StatelessWidget {
                   ),
                   RoundIconButton(
                     child: Icon(Icons.arrow_right_alt),
-                    onPress: () {
-                      Navigator.pushNamed(context, Home.id);
+                    onPress: () async {
+                      try {
+                        final newUser =
+                            await _auth.createUserWithEmailAndPassword(
+                                email: email, password: password);
+                        if (newUser != null) {
+                          Navigator.pushNamed(context, Navigation.id);
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
                     },
                   ),
                 ],
