@@ -7,6 +7,7 @@ import 'package:firefighters_app/screens/widgets/text_field_container.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class Login extends StatefulWidget {
   static const String id = 'login';
@@ -20,102 +21,111 @@ class _LoginState extends State<Login> {
 
   String email;
   String password;
-
+  bool _showSpinner = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text(
-                'Welcome Back',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 36.0,
-                  color: Color(0xFFC62828),
-                ),
-              ),
-              Expanded(
-                child: SvgPicture.asset(
-                  'images/undraw_secure_login.svg',
-                  height: size.height * 0.40,
-                ),
-              ),
-              TextFieldContainer(
-                child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    border: InputBorder.none,
-                    icon: Icon(
-                      Icons.person,
-                      color: kMainRedColor,
-                    ),
+      body: ModalProgressHUD(
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text(
+                  'Welcome Back',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 36.0,
+                    color: Color(0xFFC62828),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              TextFieldContainer(
-                child: TextFormField(
-                  obscureText: true,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    border: InputBorder.none,
-                    icon: Icon(
-                      Icons.vpn_key_rounded,
-                      color: kMainRedColor,
-                    ),
-                    suffixIcon: Icon(Icons.visibility),
+                Expanded(
+                  child: SvgPicture.asset(
+                    'images/undraw_secure_login.svg',
+                    height: size.height * 0.40,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    ' Sign in',
-                    style: kRedText,
-                  ),
-                  RoundIconButton(
-                    child: Icon(Icons.arrow_right_alt),
-                    onPress: () async {
-                      try {
-                        final existingUser =
-                            await _auth.signInWithEmailAndPassword(
-                                email: email, password: password);
-                        if (existingUser != null) {
-                          Navigator.pushNamed(context, Navigation.id);
-                        }
-                      } catch (e) {
-                        print(e);
-                      }
+                TextFieldContainer(
+                  child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (value) {
+                      email = value;
                     },
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                      border: InputBorder.none,
+                      icon: Icon(
+                        Icons.person,
+                        color: kMainRedColor,
+                      ),
+                    ),
                   ),
-                ],
-              ),
-              SignInUpField(
-                onPress: () {
-                  Navigator.pushNamed(context, Registration.id);
-                },
-              ),
-            ],
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                TextFieldContainer(
+                  child: TextFormField(
+                    obscureText: true,
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      border: InputBorder.none,
+                      icon: Icon(
+                        Icons.vpn_key_rounded,
+                        color: kMainRedColor,
+                      ),
+                      suffixIcon: Icon(Icons.visibility),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      ' Sign in',
+                      style: kRedText,
+                    ),
+                    RoundIconButton(
+                      child: Icon(Icons.arrow_right_alt),
+                      onPress: () async {
+                        setState(() {
+                          _showSpinner = true;
+                        });
+                        try {
+                          final existingUser =
+                              await _auth.signInWithEmailAndPassword(
+                                  email: email, password: password);
+                          if (existingUser != null) {
+                            Navigator.pushNamed(context, Navigation.id);
+                          }
+                          setState(() {
+                            _showSpinner = false;
+                          });
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                SignInUpField(
+                  onPress: () {
+                    Navigator.pushNamed(context, Registration.id);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
+        inAsyncCall: _showSpinner,
       ),
     );
   }

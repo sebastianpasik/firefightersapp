@@ -20,10 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      color: kMainRedColor,
-      theme: ThemeData(
-        fontFamily: 'OpenSans',
-      ),
+      theme: ThemeData(fontFamily: 'OpenSans', accentColor: kMainRedColor),
       initialRoute: Login.id,
       routes: {
         Login.id: (context) => Login(),
