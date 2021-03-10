@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class Registration extends StatefulWidget {
   static const String id = 'registration';
@@ -21,10 +22,12 @@ class _RegistrationState extends State<Registration> {
   String email;
   String password;
   bool _showSpinner = false;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: ModalProgressHUD(
         child: SafeArea(
           child: Padding(
@@ -119,20 +122,39 @@ class _RegistrationState extends State<Registration> {
                               await _auth.createUserWithEmailAndPassword(
                                   email: email, password: password);
                           if (newUser != null) {
+                            User user = _auth.currentUser;
+                            if (!user.emailVerified) {
+                              // var actionCodeSettings = ActionCodeSettings(
+                              //     url:
+                              //         'https://sep16.page.link?email=${user.email}',
+                              //     dynamicLinkDomain: "sep16.page.link",
+                              //     androidPackageName: "com.sep16.android",
+                              //     androidInstallApp: true,
+                              //     androidMinimumVersion: '12',
+                              //     handleCodeInApp: true);
+                              // actionCodeSettings
+                              await user.sendEmailVerification();
+                            }
                             Navigator.pushNamed(context, Navigation.id);
                           }
-                          setState(() {
-                            _showSpinner = false;
-                          });
+                          hideSpinner();
                         } on FirebaseAuthException catch (e) {
+                          hideSpinner();
+
                           if (e.code == 'weak-password') {
-                            print('The password provided is too weak.');
+                            hideSpinner();
+                            snackBar('The password provided is too weak.');
                           } else if (e.code == 'email-already-in-use') {
-                            print('The account already exists for that email.');
+                            snackBar(
+                                'The account already exists for that email.');
                           }
                         } catch (e) {
+                          hideSpinner();
+                          snackBar('Invalid email or password.');
+
                           print(e);
                         }
+                        hideSpinner();
                       },
                     ),
                   ],
@@ -148,6 +170,20 @@ class _RegistrationState extends State<Registration> {
           ),
         ),
         inAsyncCall: _showSpinner,
+      ),
+    );
+  }
+
+  void hideSpinner() {
+    setState(() {
+      _showSpinner = false;
+    });
+  }
+
+  void snackBar(String message) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(message),
       ),
     );
   }

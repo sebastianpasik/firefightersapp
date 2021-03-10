@@ -22,10 +22,14 @@ class _LoginState extends State<Login> {
   String email;
   String password;
   bool _showSpinner = false;
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      key: _scaffoldKey,
       body: ModalProgressHUD(
         child: SafeArea(
           child: Padding(
@@ -109,12 +113,19 @@ class _LoginState extends State<Login> {
                           setState(() {
                             _showSpinner = false;
                           });
-                           } on FirebaseAuthException catch (e) {
+                        } on FirebaseAuthException catch (e) {
                           if (e.code == 'user-not-found') {
-                            print('No user found for that email.');
+                            snackBar('No user found for that email.');
                           } else if (e.code == 'wrong-password') {
-                            print('Wrong password provided for that user.');
+                            snackBar('Wrong password provided for that user.');
+                          } else if (e.code == 'invalid-email') {
+                            snackBar('Invalid email format');
                           }
+                          hideSpinner();
+                        } catch (e) {
+                          hideSpinner();
+                          snackBar('Invalid email or password.');
+                          print(e);
                         }
                       },
                     ),
@@ -130,6 +141,20 @@ class _LoginState extends State<Login> {
           ),
         ),
         inAsyncCall: _showSpinner,
+      ),
+    );
+  }
+
+  void hideSpinner() {
+    setState(() {
+      _showSpinner = false;
+    });
+  }
+
+  void snackBar(String message) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(message),
       ),
     );
   }
