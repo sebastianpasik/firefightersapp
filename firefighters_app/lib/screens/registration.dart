@@ -1,4 +1,5 @@
 import 'package:firefighters_app/screens/home.dart';
+import 'package:firefighters_app/screens/login.dart';
 import 'package:firefighters_app/screens/navigation.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/sign_in_up_field.dart';
@@ -19,8 +20,9 @@ class Registration extends StatefulWidget {
 
 class _RegistrationState extends State<Registration> {
   final _auth = FirebaseAuth.instance;
-  String email;
-  String password;
+  String _email;
+  String _password;
+  String _passwordRepeated;
   bool _showSpinner = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -52,7 +54,7 @@ class _RegistrationState extends State<Registration> {
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (value) {
-                      email = value;
+                      _email = value;
                     },
                     decoration: InputDecoration(
                       hintText: 'Email',
@@ -71,7 +73,7 @@ class _RegistrationState extends State<Registration> {
                   child: TextFormField(
                     obscureText: true,
                     onChanged: (value) {
-                      password = value;
+                      _password = value;
                     },
                     decoration: InputDecoration(
                       hintText: 'Password',
@@ -90,6 +92,9 @@ class _RegistrationState extends State<Registration> {
                 TextFieldContainer(
                   child: TextFormField(
                     obscureText: true,
+                    onChanged: (value) {
+                      _passwordRepeated = value;
+                    },
                     decoration: InputDecoration(
                       hintText: 'Repeat Password',
                       border: InputBorder.none,
@@ -114,47 +119,42 @@ class _RegistrationState extends State<Registration> {
                     RoundIconButton(
                       child: Icon(Icons.arrow_right_alt),
                       onPress: () async {
-                        setState(() {
-                          _showSpinner = true;
-                        });
-                        try {
-                          final newUser =
-                              await _auth.createUserWithEmailAndPassword(
-                                  email: email, password: password);
-                          if (newUser != null) {
-                            User user = _auth.currentUser;
-                            if (!user.emailVerified) {
-                              // var actionCodeSettings = ActionCodeSettings(
-                              //     url:
-                              //         'https://sep16.page.link?email=${user.email}',
-                              //     dynamicLinkDomain: "sep16.page.link",
-                              //     androidPackageName: "com.sep16.android",
-                              //     androidInstallApp: true,
-                              //     androidMinimumVersion: '12',
-                              //     handleCodeInApp: true);
-                              // actionCodeSettings
-                              await user.sendEmailVerification();
+                        if (_password == _passwordRepeated) {
+                          setState(() {
+                            _showSpinner = true;
+                          });
+                          try {
+                            final newUser =
+                                await _auth.createUserWithEmailAndPassword(
+                                    email: _email, password: _password);
+                            if (newUser != null) {
+                              User user = _auth.currentUser;
+                              if (!user.emailVerified) {
+                                await user.sendEmailVerification();
+                                _showMyDialog();
+                              }
                             }
-                            Navigator.pushNamed(context, Navigation.id);
-                          }
-                          hideSpinner();
-                        } on FirebaseAuthException catch (e) {
-                          hideSpinner();
-
-                          if (e.code == 'weak-password') {
                             hideSpinner();
-                            snackBar('The password provided is too weak.');
-                          } else if (e.code == 'email-already-in-use') {
-                            snackBar(
-                                'The account already exists for that email.');
-                          }
-                        } catch (e) {
-                          hideSpinner();
-                          snackBar('Invalid email or password.');
+                          } on FirebaseAuthException catch (e) {
+                            hideSpinner();
 
-                          print(e);
+                            if (e.code == 'weak-password') {
+                              hideSpinner();
+                              snackBar('The password provided is too weak.');
+                            } else if (e.code == 'email-already-in-use') {
+                              snackBar(
+                                  'The account already exists for that email.');
+                            }
+                          } catch (e) {
+                            hideSpinner();
+                            snackBar('Invalid email or password.');
+
+                            print(e);
+                          }
+                          hideSpinner();
+                        } else {
+                          snackBar('Password in both fields does not match.');
                         }
-                        hideSpinner();
                       },
                     ),
                   ],
@@ -185,6 +185,34 @@ class _RegistrationState extends State<Registration> {
       SnackBar(
         content: Text(message),
       ),
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Verify email',
+            style: kFatAppBarText,
+          ),
+          content: Text(
+              'Email has been sent to your inbox, please check and verify.'),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.popUntil(
+                  context,
+                  ModalRoute.withName(Login.id),
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

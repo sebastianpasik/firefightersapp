@@ -19,8 +19,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _auth = FirebaseAuth.instance;
 
-  String email;
-  String password;
+  String _email;
+  String _password;
   bool _showSpinner = false;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -55,7 +55,7 @@ class _LoginState extends State<Login> {
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (value) {
-                      email = value;
+                      _email = value;
                     },
                     decoration: InputDecoration(
                       hintText: 'Email',
@@ -74,7 +74,7 @@ class _LoginState extends State<Login> {
                   child: TextFormField(
                     obscureText: true,
                     onChanged: (value) {
-                      password = value;
+                      _password = value;
                     },
                     decoration: InputDecoration(
                       hintText: 'Password',
@@ -106,9 +106,15 @@ class _LoginState extends State<Login> {
                         try {
                           final existingUser =
                               await _auth.signInWithEmailAndPassword(
-                                  email: email, password: password);
+                                  email: _email, password: _password);
                           if (existingUser != null) {
-                            Navigator.pushNamed(context, Navigation.id);
+                            User _user = _auth.currentUser;
+                            if (!_user.emailVerified) {
+                              _showMyDialog();
+                            } else {
+                              Navigator.pushReplacementNamed(
+                                  context, Navigation.id);
+                            }
                           }
                           setState(() {
                             _showSpinner = false;
@@ -156,6 +162,30 @@ class _LoginState extends State<Login> {
       SnackBar(
         content: Text(message),
       ),
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Cannot Sign in',
+            style: kFatAppBarText,
+          ),
+          content: Text('Email has not been verified.'),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
