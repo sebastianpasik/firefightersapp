@@ -1,4 +1,4 @@
-import 'package:firefighters_app/screens/home.dart';
+import 'file:///C:/Users/spasik/dev/firefightersapp/firefighters_app/lib/screens/home/home.dart';
 import 'package:firefighters_app/screens/login.dart';
 import 'package:firefighters_app/screens/navigation.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
@@ -50,61 +50,35 @@ class _RegistrationState extends State<Registration> {
                     'images/undraw_secure_login.svg',
                   ),
                 ),
-                TextFieldContainer(
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) {
-                      _email = value;
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      border: InputBorder.none,
-                      icon: Icon(
-                        Icons.person,
-                        color: kMainRedColor,
-                      ),
-                    ),
-                  ),
+                buildTextFieldContainer(
+                  txtInputType: TextInputType.emailAddress,
+                  hintTxt: 'Email',
+                  iconData: Icons.person,
+                  onKeyWord: (value) {
+                    _email = value;
+                  },
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
-                TextFieldContainer(
-                  child: TextFormField(
-                    obscureText: true,
-                    onChanged: (value) {
-                      _password = value;
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      border: InputBorder.none,
-                      icon: Icon(
-                        Icons.vpn_key_rounded,
-                        color: kMainRedColor,
-                      ),
-                      suffixIcon: Icon(Icons.visibility),
-                    ),
-                  ),
+                buildTextFieldContainer(
+                  obscureText: true,
+                  hintTxt: 'Password',
+                  iconData: Icons.vpn_key_rounded,
+                  onKeyWord: (value) {
+                    _password = value;
+                  },
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
-                TextFieldContainer(
-                  child: TextFormField(
-                    obscureText: true,
-                    onChanged: (value) {
-                      _passwordRepeated = value;
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Repeat Password',
-                      border: InputBorder.none,
-                      icon: Icon(
-                        Icons.vpn_key_rounded,
-                        color: kMainRedColor,
-                      ),
-                      suffixIcon: Icon(Icons.visibility),
-                    ),
-                  ),
+                buildTextFieldContainer(
+                  obscureText: true,
+                  hintTxt: 'Repeat Password',
+                  iconData: Icons.vpn_key_rounded,
+                  onKeyWord: (value) {
+                    _passwordRepeated = value;
+                  },
                 ),
                 SizedBox(
                   height: 10.0,
@@ -118,44 +92,7 @@ class _RegistrationState extends State<Registration> {
                     ),
                     RoundIconButton(
                       child: Icon(Icons.arrow_right_alt),
-                      onPress: () async {
-                        if (_password == _passwordRepeated) {
-                          setState(() {
-                            _showSpinner = true;
-                          });
-                          try {
-                            final newUser =
-                                await _auth.createUserWithEmailAndPassword(
-                                    email: _email, password: _password);
-                            if (newUser != null) {
-                              User user = _auth.currentUser;
-                              if (!user.emailVerified) {
-                                await user.sendEmailVerification();
-                                _showMyDialog();
-                              }
-                            }
-                            hideSpinner();
-                          } on FirebaseAuthException catch (e) {
-                            hideSpinner();
-
-                            if (e.code == 'weak-password') {
-                              hideSpinner();
-                              snackBar('The password provided is too weak.');
-                            } else if (e.code == 'email-already-in-use') {
-                              snackBar(
-                                  'The account already exists for that email.');
-                            }
-                          } catch (e) {
-                            hideSpinner();
-                            snackBar('Invalid email or password.');
-
-                            print(e);
-                          }
-                          hideSpinner();
-                        } else {
-                          snackBar('Password in both fields does not match.');
-                        }
-                      },
+                      onPress: _handleRegisterPressed,
                     ),
                   ],
                 ),
@@ -174,9 +111,73 @@ class _RegistrationState extends State<Registration> {
     );
   }
 
-  void hideSpinner() {
+  void _handleRegisterPressed() async {
+    if (_password == _passwordRepeated) {
+      showSpinner();
+      try {
+        final newUser = await _auth.createUserWithEmailAndPassword(
+            email: _email, password: _password);
+        if (newUser != null) {
+          User user = _auth.currentUser;
+          if (!user.emailVerified) {
+            await user.sendEmailVerification();
+            _showMyDialog();
+          }
+        }
+        _hideSpinner();
+      } on FirebaseAuthException catch (e) {
+        _hideSpinner();
+
+        if (e.code == 'weak-password') {
+          _hideSpinner();
+          snackBar('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          snackBar('The account already exists for that email.');
+        }
+      } catch (e) {
+        _hideSpinner();
+        snackBar('Invalid email or password.');
+
+        print(e);
+      }
+      _hideSpinner();
+    } else {
+      snackBar('Password in both fields does not match.');
+    }
+  }
+
+  TextFieldContainer buildTextFieldContainer(
+      {bool obscureText,
+      String hintTxt,
+      IconData iconData,
+      TextInputType txtInputType,
+      Function(String) onKeyWord}) {
+    return TextFieldContainer(
+      child: TextFormField(
+        keyboardType: txtInputType,
+        obscureText: obscureText != null ? obscureText : false,
+        onChanged: onKeyWord,
+        decoration: InputDecoration(
+          hintText: hintTxt,
+          border: InputBorder.none,
+          icon: Icon(
+            iconData,
+            color: kMainRedColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _hideSpinner() {
     setState(() {
       _showSpinner = false;
+    });
+  }
+
+  void showSpinner() {
+    setState(() {
+      _showSpinner = true;
     });
   }
 

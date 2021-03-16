@@ -4,7 +4,7 @@ import 'file:///C:/Users/spasik/dev/firefightersapp/firefighters_app/lib/screens
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'home.dart';
+import 'home/home.dart';
 
 class Navigation extends StatefulWidget {
   static const String id = 'navigation';

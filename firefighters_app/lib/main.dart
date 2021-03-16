@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firefighters_app/screens/home.dart';
+import 'package:firefighters_app/screens/home/home.dart';
 import 'package:firefighters_app/screens/location.dart';
 import 'package:firefighters_app/screens/login.dart';
 import 'package:firefighters_app/screens/navigation.dart';

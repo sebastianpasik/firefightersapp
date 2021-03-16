@@ -51,41 +51,25 @@ class _LoginState extends State<Login> {
                     height: size.height * 0.40,
                   ),
                 ),
-                TextFieldContainer(
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) {
-                      _email = value;
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      border: InputBorder.none,
-                      icon: Icon(
-                        Icons.person,
-                        color: kMainRedColor,
-                      ),
-                    ),
-                  ),
+                buildTextFieldContainer(
+                  txtInputType: TextInputType.emailAddress,
+                  hintTxt: 'Email',
+                  iconData: Icons.person,
+                  onKeyWord: (value) {
+                    _email = value;
+                  },
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
-                TextFieldContainer(
-                  child: TextFormField(
-                    obscureText: true,
-                    onChanged: (value) {
-                      _password = value;
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      border: InputBorder.none,
-                      icon: Icon(
-                        Icons.vpn_key_rounded,
-                        color: kMainRedColor,
-                      ),
-                      suffixIcon: Icon(Icons.visibility),
-                    ),
-                  ),
+                buildTextFieldContainer(
+                  txtInputType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  hintTxt: 'Password',
+                  iconData: Icons.vpn_key_rounded,
+                  onKeyWord: (value) {
+                    _password = value;
+                  },
                 ),
                 SizedBox(
                   height: 10.0,
@@ -99,41 +83,7 @@ class _LoginState extends State<Login> {
                     ),
                     RoundIconButton(
                       child: Icon(Icons.arrow_right_alt),
-                      onPress: () async {
-                        setState(() {
-                          _showSpinner = true;
-                        });
-                        try {
-                          final existingUser =
-                              await _auth.signInWithEmailAndPassword(
-                                  email: _email, password: _password);
-                          if (existingUser != null) {
-                            User _user = _auth.currentUser;
-                            if (!_user.emailVerified) {
-                              _showMyDialog();
-                            } else {
-                              Navigator.pushReplacementNamed(
-                                  context, Navigation.id);
-                            }
-                          }
-                          setState(() {
-                            _showSpinner = false;
-                          });
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            snackBar('No user found for that email.');
-                          } else if (e.code == 'wrong-password') {
-                            snackBar('Wrong password provided for that user.');
-                          } else if (e.code == 'invalid-email') {
-                            snackBar('Invalid email format');
-                          }
-                          hideSpinner();
-                        } catch (e) {
-                          hideSpinner();
-                          snackBar('Invalid email or password.');
-                          print(e);
-                        }
-                      },
+                      onPress: _onLoginPressed,
                     ),
                   ],
                 ),
@@ -147,6 +97,61 @@ class _LoginState extends State<Login> {
           ),
         ),
         inAsyncCall: _showSpinner,
+      ),
+    );
+  }
+
+  void _onLoginPressed() async {
+    setState(() {
+      _showSpinner = true;
+    });
+    try {
+      final existingUser = await _auth.signInWithEmailAndPassword(
+          email: _email, password: _password);
+      if (existingUser != null) {
+        User _user = _auth.currentUser;
+        if (!_user.emailVerified) {
+          _showAlertDialog();
+        } else {
+          Navigator.pushReplacementNamed(context, Navigation.id);
+        }
+      }
+      hideSpinner();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        snackBar('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        snackBar('Wrong password provided for that user.');
+      } else if (e.code == 'invalid-email') {
+        snackBar('Invalid email format');
+      }
+      hideSpinner();
+    } catch (e) {
+      hideSpinner();
+      snackBar('Invalid email or password.');
+      print(e);
+    }
+  }
+
+  TextFieldContainer buildTextFieldContainer(
+      {bool obscureText,
+      String hintTxt,
+      IconData iconData,
+      TextInputType txtInputType,
+      Function(String) onKeyWord}) {
+    return TextFieldContainer(
+      child: TextFormField(
+        keyboardType: txtInputType,
+        obscureText: obscureText != null ? obscureText : false,
+        onChanged: onKeyWord,
+        decoration: InputDecoration(
+          hintText: hintTxt,
+          border: InputBorder.none,
+          icon: Icon(
+            iconData,
+            color: kMainRedColor,
+          ),
+        ),
       ),
     );
   }
@@ -165,7 +170,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future<void> _showMyDialog() async {
+  Future<void> _showAlertDialog() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
