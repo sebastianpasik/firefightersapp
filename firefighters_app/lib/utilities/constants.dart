@@ -23,3 +23,7 @@ const kOptionText = TextStyle(
   color: kMainRedColor,
   fontSize: 16.0,
 );
+
+const kSettingsText = TextStyle(
+  fontSize: 18.0,
+);

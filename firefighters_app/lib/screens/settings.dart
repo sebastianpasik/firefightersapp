@@ -13,6 +13,11 @@ class Settings extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         OnClickActionButton(
+          label: 'Add a new friend',
+          textStyle: kSettingsText,
+          onClick: () {},
+        ),
+        OnClickActionButton(
           label: 'Log out',
           textStyle: kRedText,
           onClick: () {

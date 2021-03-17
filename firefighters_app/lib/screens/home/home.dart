@@ -1,6 +1,7 @@
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
 import 'package:firefighters_app/utilities/constants.dart';
+import 'package:ringtone_player/ringtone_player.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -27,6 +28,9 @@ class Home extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 24.0),
                 ),
+                onPress: () {
+                  RingtonePlayer.ringtone();
+                },
               ),
             ),
             Expanded(
