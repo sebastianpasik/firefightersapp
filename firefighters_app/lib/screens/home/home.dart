@@ -1,14 +1,21 @@
+import 'package:firefighters_app/screens/home/send_alarm_data.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
 import 'package:firefighters_app/utilities/constants.dart';
-import 'package:ringtone_player/ringtone_player.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   static const String id = 'home';
 
   @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  String _alarmMessage;
+  @override
   Widget build(BuildContext context) {
+    bool _switchState = true;
     return Center(
       child: Container(
         margin: EdgeInsets.all(20.0),
@@ -20,23 +27,20 @@ class Home extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: RoundIconButton(
-                diameter: 150.0,
-                child: Text(
-                  'Alarm',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24.0),
-                ),
-                onPress: () {
-                  RingtonePlayer.ringtone();
-                },
-              ),
+                  diameter: 150.0,
+                  child: SendAlarmData(
+                    alarmMessage: _alarmMessage,
+                  )),
             ),
             Expanded(
               child: TextFieldContainer(
                 margin: 16.0,
                 child: TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      _alarmMessage = value;
+                    });
+                  },
                   decoration: InputDecoration(
                     hintText: 'Alert message',
                     border: InputBorder.none,

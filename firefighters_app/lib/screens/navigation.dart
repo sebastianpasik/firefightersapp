@@ -1,6 +1,6 @@
 import 'package:firefighters_app/screens/location.dart';
 import 'package:firefighters_app/screens/widgets/custom_app_bar.dart';
-import 'file:///C:/Users/spasik/dev/firefightersapp/firefighters_app/lib/screens/settings.dart';
+import 'package:firefighters_app/screens/settings/settings.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
