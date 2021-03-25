@@ -12,7 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String _alarmMessage;
+  String? _alarmMessage = "";
   @override
   Widget build(BuildContext context) {
     bool _switchState = true;
@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
               child: RoundIconButton(
                   diameter: 150.0,
                   child: SendAlarmData(
-                    alarmMessage: _alarmMessage,
+                    alarmMessage: _alarmMessage!,
                   )),
             ),
             Expanded(

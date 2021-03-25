@@ -4,7 +4,7 @@ class SignInUpField extends StatelessWidget {
   SignInUpField({this.onPress, this.login = true});
 
   final bool login;
-  final Function onPress;
+  final void Function()? onPress;
   @override
   Widget build(BuildContext context) {
     return Row(

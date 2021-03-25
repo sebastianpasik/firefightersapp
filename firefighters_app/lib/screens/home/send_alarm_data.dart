@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class SendAlarmData extends StatefulWidget {
   SendAlarmData({this.alarmMessage});
-  final String alarmMessage;
+  final String? alarmMessage;
 
   @override
   _SendAlarmDataState createState() => _SendAlarmDataState();
@@ -12,7 +12,7 @@ class SendAlarmData extends StatefulWidget {
 
 class _SendAlarmDataState extends State<SendAlarmData> {
   final _auth = FirebaseAuth.instance;
-  User loggedInUser;
+  User? loggedInUser;
 
   @override
   void initState() {
@@ -23,9 +23,7 @@ class _SendAlarmDataState extends State<SendAlarmData> {
   void getCurrentUser() {
     try {
       final user = _auth.currentUser;
-      if (user != null) {
         loggedInUser = user;
-      }
     } catch (e) {
       print(e);
     }
@@ -38,7 +36,7 @@ class _SendAlarmDataState extends State<SendAlarmData> {
     Future<void> sendAlarmData() {
       return messages
           .add({
-            'notifier': loggedInUser.email,
+            'notifier': loggedInUser!.email,
             'setAlarm': true,
             'text': widget.alarmMessage
           })

@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar({this.appBar, this.titleText});
-  final AppBar appBar;
-  final String titleText;
+  final AppBar? appBar;
+  final String? titleText;
   @override
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0.0,
       backgroundColor: kLightGreyBackgroundColor,
       title: Text(
-        titleText,
+        titleText!,
         style: kFatAppBarText,
       ),
       automaticallyImplyLeading: false,
@@ -43,5 +43,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => new Size.fromHeight(appBar.preferredSize.height);
+  Size get preferredSize => new Size.fromHeight(appBar!.preferredSize.height);
 }

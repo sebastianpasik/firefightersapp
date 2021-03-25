@@ -11,7 +11,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final _auth = FirebaseAuth.instance;
-  User loggedInUser;
+  User? loggedInUser;
 
   @override
   void initState() {
@@ -22,10 +22,8 @@ class _ProfileState extends State<Profile> {
   void getCurrentUser() {
     try {
       final user = _auth.currentUser;
-      if (user != null) {
         loggedInUser = user;
-        print(user.email);
-      }
+        print(user!.email);
     } catch (e) {
       print(e);
     }
@@ -53,7 +51,7 @@ class _ProfileState extends State<Profile> {
           ),
           ElevatedBoxCard(
             label: 'Email',
-            value: loggedInUser.email,
+            value: loggedInUser!.email,
           ),
         ],
       ),
@@ -62,10 +60,10 @@ class _ProfileState extends State<Profile> {
 }
 
 class ElevatedBoxCard extends StatelessWidget {
-  ElevatedBoxCard({this.label, this.value});
+  ElevatedBoxCard({required this.label, required this.value});
 
-  final String label;
-  final String value;
+  final String? label;
+  final String? value;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +87,7 @@ class ElevatedBoxCard extends StatelessWidget {
         children: <Widget>[
           Padding(
             child: Text(
-              label,
+              label!,
               style: kOptionText,
             ),
             padding: EdgeInsets.only(
@@ -104,7 +102,7 @@ class ElevatedBoxCard extends StatelessWidget {
               left: 16.0,
             ),
             child: Text(
-              value,
+              value!,
               style: TextStyle(
                 fontSize: 18.0,
               ),

@@ -8,9 +8,9 @@ class RoundIconButton extends StatelessWidget {
     this.diameter = 57.0,
   });
 
-  final Function onPress;
+  final void Function()? onPress;
   final double diameter;
-  final Widget child;
+  final Widget? child;
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(

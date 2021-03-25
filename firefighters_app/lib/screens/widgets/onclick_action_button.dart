@@ -4,9 +4,9 @@ class OnClickActionButton extends StatelessWidget {
   OnClickActionButton(
       {@required this.label, @required this.onClick, this.textStyle});
 
-  final String label;
-  final Function onClick;
-  final TextStyle textStyle;
+  final String? label;
+  final void Function()? onClick;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class OnClickActionButton extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.only(top: 12.0, left: 12.0),
           child: Text(
-            label,
+            label!,
             textAlign: TextAlign.start,
             style: textStyle,
           ),

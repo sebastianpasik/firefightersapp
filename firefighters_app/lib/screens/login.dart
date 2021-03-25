@@ -7,7 +7,7 @@ import 'package:firefighters_app/screens/widgets/text_field_container.dart';
 import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class Login extends StatefulWidget {
   static const String id = 'login';
@@ -19,8 +19,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _auth = FirebaseAuth.instance;
 
-  String _email;
-  String _password;
+  String? _email;
+  String? _password;
   bool _showSpinner = false;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -88,9 +88,7 @@ class _LoginState extends State<Login> {
                   ],
                 ),
                 SignInUpField(
-                  onPress: () {
-                    Navigator.pushNamed(context, Registration.id);
-                  },
+                  onPress: () => Navigator.pushNamed(context, Registration.id),
                 ),
               ],
             ),
@@ -107,10 +105,10 @@ class _LoginState extends State<Login> {
     });
     try {
       final existingUser = await _auth.signInWithEmailAndPassword(
-          email: _email, password: _password);
+          email: _email!, password: _password!);
       if (existingUser != null) {
-        User _user = _auth.currentUser;
-        if (!_user.emailVerified) {
+        User? _user = _auth.currentUser;
+        if (!_user!.emailVerified) {
           _showAlertDialog();
         } else {
           Navigator.pushReplacementNamed(context, Navigation.id);
@@ -134,11 +132,11 @@ class _LoginState extends State<Login> {
   }
 
   TextFieldContainer buildTextFieldContainer(
-      {bool obscureText,
-      String hintTxt,
-      IconData iconData,
-      TextInputType txtInputType,
-      Function(String) onKeyWord}) {
+      {bool? obscureText,
+      String? hintTxt,
+      IconData? iconData,
+      TextInputType? txtInputType,
+      Function(String)? onKeyWord}) {
     return TextFieldContainer(
       child: TextFormField(
         keyboardType: txtInputType,
@@ -163,7 +161,7 @@ class _LoginState extends State<Login> {
   }
 
   void snackBar(String message) {
-    _scaffoldKey.currentState.showSnackBar(
+    _scaffoldKey.currentState!.showSnackBar(
       SnackBar(
         content: Text(message),
       ),

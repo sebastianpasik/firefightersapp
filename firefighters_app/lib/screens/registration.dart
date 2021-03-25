@@ -1,6 +1,4 @@
-import 'file:///C:/Users/spasik/dev/firefightersapp/firefighters_app/lib/screens/home/home.dart';
 import 'package:firefighters_app/screens/login.dart';
-import 'package:firefighters_app/screens/navigation.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/sign_in_up_field.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
@@ -8,8 +6,7 @@ import 'package:firefighters_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class Registration extends StatefulWidget {
   static const String id = 'registration';
@@ -20,9 +17,9 @@ class Registration extends StatefulWidget {
 
 class _RegistrationState extends State<Registration> {
   final _auth = FirebaseAuth.instance;
-  String _email;
-  String _password;
-  String _passwordRepeated;
+  String? _email;
+  String? _password;
+  String? _passwordRepeated;
   bool _showSpinner = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -116,13 +113,11 @@ class _RegistrationState extends State<Registration> {
       showSpinner();
       try {
         final newUser = await _auth.createUserWithEmailAndPassword(
-            email: _email, password: _password);
-        if (newUser != null) {
-          User user = _auth.currentUser;
-          if (!user.emailVerified) {
-            await user.sendEmailVerification();
-            _showMyDialog();
-          }
+            email: _email!, password: _password!);
+        User? user = _auth.currentUser;
+        if (!user!.emailVerified) {
+          await user.sendEmailVerification();
+          _showMyDialog();
         }
         _hideSpinner();
       } on FirebaseAuthException catch (e) {
@@ -147,11 +142,11 @@ class _RegistrationState extends State<Registration> {
   }
 
   TextFieldContainer buildTextFieldContainer(
-      {bool obscureText,
-      String hintTxt,
-      IconData iconData,
-      TextInputType txtInputType,
-      Function(String) onKeyWord}) {
+      {bool? obscureText,
+      String? hintTxt,
+      IconData? iconData,
+      TextInputType? txtInputType,
+      Function(String)? onKeyWord}) {
     return TextFieldContainer(
       child: TextFormField(
         keyboardType: txtInputType,
@@ -182,7 +177,7 @@ class _RegistrationState extends State<Registration> {
   }
 
   void snackBar(String message) {
-    _scaffoldKey.currentState.showSnackBar(
+    _scaffoldKey.currentState!.showSnackBar(
       SnackBar(
         content: Text(message),
       ),
