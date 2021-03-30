@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 
 class Settings extends StatelessWidget {
   static const String id = 'settings';
-  final _auth = FirebaseAuth.instance;
   final _settingsService = SettingsService();
 
   @override
@@ -19,14 +18,18 @@ class Settings extends StatelessWidget {
           label: 'New Friend',
           textStyle: kSettingsText,
           onClick: () {
-            _settingsService.newFriend();
+            // _settingsService.showSoundUriNotification(
+            //     0,
+            //     'Email: sebastian@email.com',
+            //     'Alarm on the south street in New Jersey');
+            _settingsService.getNotificationsStream();
           },
         ),
         OnClickActionButton(
           label: 'Log out',
           textStyle: kRedText,
           onClick: () {
-            _auth.signOut();
+            _settingsService.logOut();
             Navigator.pushReplacementNamed(context, Login.id);
           },
         ),

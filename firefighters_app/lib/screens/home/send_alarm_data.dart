@@ -23,7 +23,7 @@ class _SendAlarmDataState extends State<SendAlarmData> {
   void getCurrentUser() {
     try {
       final user = _auth.currentUser;
-        loggedInUser = user;
+      loggedInUser = user;
     } catch (e) {
       print(e);
     }
@@ -33,6 +33,7 @@ class _SendAlarmDataState extends State<SendAlarmData> {
   Widget build(BuildContext context) {
     CollectionReference messages =
         FirebaseFirestore.instance.collection('messages');
+
     Future<void> sendAlarmData() {
       return messages
           .add({
