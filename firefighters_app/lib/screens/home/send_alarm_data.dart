@@ -3,8 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SendAlarmData extends StatefulWidget {
-  SendAlarmData({this.alarmMessage});
+  SendAlarmData({this.alarmMessage, this.textEditingController});
   final String? alarmMessage;
+  final TextEditingController? textEditingController;
 
   @override
   _SendAlarmDataState createState() => _SendAlarmDataState();
@@ -35,10 +36,11 @@ class _SendAlarmDataState extends State<SendAlarmData> {
         FirebaseFirestore.instance.collection('messages');
 
     Future<void> sendAlarmData() {
+      widget.textEditingController?.clear();
       return messages
           .add({
+            'timestamp': DateTime.now(),
             'notifier': loggedInUser!.email,
-            'setAlarm': true,
             'text': widget.alarmMessage
           })
           .then((value) => print("Message Sent"))

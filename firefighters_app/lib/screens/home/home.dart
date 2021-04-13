@@ -12,6 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final notificationTextController = TextEditingController();
   String? _alarmMessage = "";
   @override
   Widget build(BuildContext context) {
@@ -27,15 +28,18 @@ class _HomeState extends State<Home> {
           children: <Widget>[
             Expanded(
               child: RoundIconButton(
-                  diameter: 150.0,
-                  child: SendAlarmData(
-                    alarmMessage: _alarmMessage!,
-                  )),
+                diameter: 150.0,
+                child: SendAlarmData(
+                  alarmMessage: _alarmMessage!,
+                  textEditingController: notificationTextController,
+                ),
+              ),
             ),
             Expanded(
               child: TextFieldContainer(
                 margin: 16.0,
                 child: TextFormField(
+                  controller: notificationTextController,
                   onChanged: (value) {
                     setState(() {
                       _alarmMessage = value;

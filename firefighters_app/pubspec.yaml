@@ -13,14 +13,18 @@ dependencies:
     sdk: flutter
   firebase_core: ^1.0.2
   firebase_auth: ^1.0.1
+  firebase_messaging: ^9.1.1
   cloud_firestore: ^1.0.2
   cupertino_icons: ^1.0.0
   modal_progress_hud_nsn: ^0.1.0-nullsafety-1
   firebase_dynamic_links: ^0.8.0
+  workmanager: ^0.2.3
   # The latest version is 0.19.2+1
   flutter_svg: 0.21.0-nullsafety.0
   flutter_ringtone_player: ^3.0.0
   flutter_local_notifications: ^5.0.0
+  provider: ^5.0.0
+  google_maps_flutter: ^2.0.1
 
 dev_dependencies:
   flutter_test:
