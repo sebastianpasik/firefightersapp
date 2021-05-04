@@ -32,8 +32,7 @@ class _SendAlarmDataState extends State<SendAlarmData> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference messages =
-        FirebaseFirestore.instance.collection('messages');
+    var messages = FirebaseFirestore.instance.collection('messages');
 
     Future<void> sendAlarmData() {
       widget.textEditingController?.clear();
@@ -43,8 +42,8 @@ class _SendAlarmDataState extends State<SendAlarmData> {
             'notifier': loggedInUser!.email,
             'text': widget.alarmMessage
           })
-          .then((value) => print("Message Sent"))
-          .catchError((error) => print("Failed to send message: $error"));
+          .then((value) => print('Message Sent'))
+          .catchError((error) => print('Failed to send message: $error'));
     }
 
     return TextButton(

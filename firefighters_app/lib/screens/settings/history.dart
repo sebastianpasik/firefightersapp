@@ -74,7 +74,7 @@ class _HistoryState extends State<History> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   final notifications = snapshot.data.docs.reversed;
-                  List<MessageBubble> messageWidgets = [];
+                  var messageWidgets = <MessageBubble>[];
                   for (var notification in notifications) {
                     String textMessage = notification.data()['text'];
                     String sender = notification.data()['notifier'];
@@ -91,7 +91,6 @@ class _HistoryState extends State<History> {
                         return Future.value(true);
                       });
                     }
-
                     final messageWidget = MessageBubble(
                       message: textMessage,
                       sender: sender,
@@ -133,21 +132,20 @@ Future<void> showSoundUriNotification(
   /// this calls a method over a platform channel implemented within the
   /// example app to return the Uri for the default alarm sound and uses
   /// as the notification sound
-  const int insistentFlag = 4;
-  final AndroidNotificationDetails androidPlatformChannelSpecifics =
-      AndroidNotificationDetails(
-          'high_importance_channel',
-          'High Importance Notifications',
-          'This channel is used for important notifications.',
-          icon: 'baseline_local_fire_black',
-          importance: Importance.max,
-          priority: Priority.high,
-          ticker: 'ticker',
-          sound: RawResourceAndroidNotificationSound('alert_tone'),
-          additionalFlags: Int32List.fromList(<int>[insistentFlag]),
-          largeIcon: DrawableResourceAndroidBitmap('baseline_local_fire_black'),
-          styleInformation: const DefaultStyleInformation(true, true));
-  final NotificationDetails platformChannelSpecifics =
+  const insistentFlag = 4;
+  final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'high_importance_channel',
+      'High Importance Notifications',
+      'This channel is used for important notifications.',
+      icon: 'baseline_local_fire_black',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+      sound: RawResourceAndroidNotificationSound('alert_tone'),
+      additionalFlags: Int32List.fromList(<int>[insistentFlag]),
+      largeIcon: DrawableResourceAndroidBitmap('baseline_local_fire_black'),
+      styleInformation: const DefaultStyleInformation(true, true));
+  final platformChannelSpecifics =
       NotificationDetails(android: androidPlatformChannelSpecifics);
   await flutterLocalNotificationsPlugin.show(
       id, title, description, platformChannelSpecifics);

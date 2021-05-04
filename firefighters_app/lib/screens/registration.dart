@@ -28,6 +28,7 @@ class _RegistrationState extends State<Registration> {
     return Scaffold(
       key: _scaffoldKey,
       body: ModalProgressHUD(
+        inAsyncCall: _showSpinner,
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -88,8 +89,8 @@ class _RegistrationState extends State<Registration> {
                       style: kRedText,
                     ),
                     RoundIconButton(
-                      child: Icon(Icons.arrow_right_alt),
                       onPress: _handleRegisterPressed,
+                      child: Icon(Icons.arrow_right_alt),
                     ),
                   ],
                 ),
@@ -103,7 +104,6 @@ class _RegistrationState extends State<Registration> {
             ),
           ),
         ),
-        inAsyncCall: _showSpinner,
       ),
     );
   }
@@ -112,12 +112,12 @@ class _RegistrationState extends State<Registration> {
     if (_password == _passwordRepeated) {
       showSpinner();
       try {
-        final newUser = await _auth.createUserWithEmailAndPassword(
+        await _auth.createUserWithEmailAndPassword(
             email: _email!, password: _password!);
-        User? user = _auth.currentUser;
+        var user = _auth.currentUser;
         if (!user!.emailVerified) {
           await user.sendEmailVerification();
-          _showMyDialog();
+          await _showMyDialog();
         }
         _hideSpinner();
       } on FirebaseAuthException catch (e) {
@@ -150,7 +150,7 @@ class _RegistrationState extends State<Registration> {
     return TextFieldContainer(
       child: TextFormField(
         keyboardType: txtInputType,
-        obscureText: obscureText != null ? obscureText : false,
+        obscureText: obscureText ?? false,
         onChanged: onKeyWord,
         decoration: InputDecoration(
           hintText: hintTxt,
@@ -198,13 +198,13 @@ class _RegistrationState extends State<Registration> {
               'Email has been sent to your inbox, please check and verify.'),
           actions: [
             TextButton(
-              child: Text('OK'),
               onPressed: () {
                 Navigator.popUntil(
                   context,
                   ModalRoute.withName(Login.id),
                 );
               },
+              child: Text('OK'),
             ),
           ],
         );

@@ -13,10 +13,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final notificationTextController = TextEditingController();
-  String? _alarmMessage = "";
+  String? _alarmMessage = '';
   @override
   Widget build(BuildContext context) {
-    bool _switchState = true;
     return Center(
       child: Container(
         margin: EdgeInsets.all(20.0),

@@ -27,10 +27,11 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
       body: ModalProgressHUD(
+        inAsyncCall: _showSpinner,
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(24.0),
@@ -82,8 +83,8 @@ class _LoginState extends State<Login> {
                       style: kRedText,
                     ),
                     RoundIconButton(
-                      child: Icon(Icons.arrow_right_alt),
                       onPress: _onLoginPressed,
+                      child: Icon(Icons.arrow_right_alt),
                     ),
                   ],
                 ),
@@ -94,7 +95,6 @@ class _LoginState extends State<Login> {
             ),
           ),
         ),
-        inAsyncCall: _showSpinner,
       ),
     );
   }
@@ -107,11 +107,11 @@ class _LoginState extends State<Login> {
       final existingUser = await _auth.signInWithEmailAndPassword(
           email: _email!, password: _password!);
       if (existingUser != null) {
-        User? _user = _auth.currentUser;
+        var _user = _auth.currentUser;
         if (!_user!.emailVerified) {
-          _showAlertDialog();
+          await _showAlertDialog();
         } else {
-          Navigator.pushReplacementNamed(context, Navigation.id);
+          await Navigator.pushReplacementNamed(context, Navigation.id);
         }
       }
       hideSpinner();
@@ -140,7 +140,7 @@ class _LoginState extends State<Login> {
     return TextFieldContainer(
       child: TextFormField(
         keyboardType: txtInputType,
-        obscureText: obscureText != null ? obscureText : false,
+        obscureText: obscureText ?? false,
         onChanged: onKeyWord,
         decoration: InputDecoration(
           hintText: hintTxt,
@@ -181,10 +181,10 @@ class _LoginState extends State<Login> {
           content: Text('Email has not been verified.'),
           actions: [
             TextButton(
-              child: Text('OK'),
               onPressed: () {
                 Navigator.pop(context);
               },
+              child: Text('OK'),
             ),
           ],
         );

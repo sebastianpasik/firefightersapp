@@ -26,7 +26,7 @@ class SettingsService {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
+            return Text('Loading');
           }
 
           final notifications = snapshot.data.documents;

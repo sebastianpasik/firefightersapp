@@ -13,6 +13,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:dcdg/dcdg.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -20,9 +21,9 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //FirebaseMessaging messaging = FirebaseMessaging.instance;
-  const AndroidInitializationSettings initializationSettingsAndroid =
+  const initializationSettingsAndroid =
       AndroidInitializationSettings('baseline_local_fire_black');
-  const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  const channel = AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
     'This channel is used for important notifications.', // description
@@ -35,7 +36,7 @@ void main() async {
   //         AndroidFlutterLocalNotificationsPlugin>()
   //     ?.createNotificationChannel(channel);
 
-  final InitializationSettings initializationSettings =
+  final initializationSettings =
       InitializationSettings(android: initializationSettingsAndroid);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String payload) async {
@@ -44,7 +45,7 @@ void main() async {
     }
   });
 
-  Workmanager.initialize(
+  await Workmanager.initialize(
 
       // The top level function, aka callbackDispatcher
       History.callbackDispatcher,
@@ -96,7 +97,7 @@ class MyApp extends StatelessWidget {
               Home.id: (context) => Home(),
               Navigation.id: (context) => Navigation(),
               Settings.id: (context) => Settings(),
-              Location.id: (context) => Location(),
+              LocationScreen.id: (context) => LocationScreen(),
               Profile.id: (context) => Profile(),
               History.id: (context) => History(),
             },
