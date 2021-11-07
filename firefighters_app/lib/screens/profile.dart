@@ -1,4 +1,5 @@
-import 'package:firefighters_app/utilities/constants.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
+import 'package:firefighters_app/utilities/resources/ffa_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -22,8 +23,8 @@ class _ProfileState extends State<Profile> {
   void getCurrentUser() {
     try {
       final user = _auth.currentUser;
-        loggedInUser = user;
-        print(user!.email);
+      loggedInUser = user;
+      print(user!.email);
     } catch (e) {
       print(e);
     }
@@ -34,14 +35,14 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        leading: BackButton(color: kMainRedColor),
-        backgroundColor: kLightGreyBackgroundColor,
+        leading: BackButton(color: FFAColor.mainRedColor),
+        backgroundColor: FFAColor.lightGreyBackgroundColor,
         title: Text(
           'Profile',
-          style: kFatAppBarText,
+          style: FFAStyles.fatAppBarText,
         ),
       ),
-      backgroundColor: kLightGreyBackgroundColor,
+      backgroundColor: FFAColor.lightGreyBackgroundColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -86,12 +87,12 @@ class ElevatedBoxCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            child: Text(
-              label!,
-              style: kOptionText,
-            ),
             padding: EdgeInsets.only(
               left: 16.0,
+            ),
+            child: Text(
+              label!,
+              style: FFAStyles.optionText,
             ),
           ),
           SizedBox(

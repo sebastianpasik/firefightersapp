@@ -2,8 +2,10 @@
 import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firefighters_app/main.dart';
-import 'package:firefighters_app/utilities/constants.dart';
+import 'package:firefighters_app/model/notification_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
+import 'package:firefighters_app/utilities/resources/ffa_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:workmanager/workmanager.dart';
@@ -52,14 +54,14 @@ class _HistoryState extends State<History> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        leading: BackButton(color: kMainRedColor),
-        backgroundColor: kLightGreyBackgroundColor,
+        leading: BackButton(color: FFAColor.mainRedColor),
+        backgroundColor: FFAColor.lightGreyBackgroundColor,
         title: Text(
           'History',
-          style: kFatAppBarText,
+          style: FFAStyles.fatAppBarText,
         ),
       ),
-      backgroundColor: kLightGreyBackgroundColor,
+      backgroundColor: FFAColor.lightGreyBackgroundColor,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,16 +116,6 @@ class _HistoryState extends State<History> {
         ),
       ),
     );
-  }
-}
-
-class NotificationContent extends ChangeNotifier {
-  String title;
-  String message;
-
-  void changeContent(String newTitle, String newMessage) {
-    title = newTitle;
-    message = newMessage;
   }
 }
 

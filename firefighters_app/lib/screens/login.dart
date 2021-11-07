@@ -4,7 +4,8 @@ import 'package:firefighters_app/screens/registration.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/sign_in_up_field.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
-import 'package:firefighters_app/utilities/constants.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
+import 'package:firefighters_app/utilities/resources/ffa_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -80,7 +81,7 @@ class _LoginState extends State<Login> {
                   children: <Widget>[
                     Text(
                       ' Sign in',
-                      style: kRedText,
+                      style: FFAStyles.redText,
                     ),
                     RoundIconButton(
                       onPress: _onLoginPressed,
@@ -147,7 +148,7 @@ class _LoginState extends State<Login> {
           border: InputBorder.none,
           icon: Icon(
             iconData,
-            color: kMainRedColor,
+            color: FFAColor.mainRedColor,
           ),
         ),
       ),
@@ -176,7 +177,7 @@ class _LoginState extends State<Login> {
         return AlertDialog(
           title: Text(
             'Cannot Sign in',
-            style: kFatAppBarText,
+            style: FFAStyles.fatAppBarText,
           ),
           content: Text('Email has not been verified.'),
           actions: [

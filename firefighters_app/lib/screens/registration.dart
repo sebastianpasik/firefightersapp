@@ -2,7 +2,8 @@ import 'package:firefighters_app/screens/login.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/sign_in_up_field.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
-import 'package:firefighters_app/utilities/constants.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
+import 'package:firefighters_app/utilities/resources/ffa_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -86,7 +87,7 @@ class _RegistrationState extends State<Registration> {
                   children: <Widget>[
                     Text(
                       ' Sign up',
-                      style: kRedText,
+                      style: FFAStyles.redText,
                     ),
                     RoundIconButton(
                       onPress: _handleRegisterPressed,
@@ -157,7 +158,7 @@ class _RegistrationState extends State<Registration> {
           border: InputBorder.none,
           icon: Icon(
             iconData,
-            color: kMainRedColor,
+            color: FFAColor.mainRedColor,
           ),
         ),
       ),
@@ -192,7 +193,7 @@ class _RegistrationState extends State<Registration> {
         return AlertDialog(
           title: Text(
             'Verify email',
-            style: kFatAppBarText,
+            style: FFAStyles.fatAppBarText,
           ),
           content: Text(
               'Email has been sent to your inbox, please check and verify.'),

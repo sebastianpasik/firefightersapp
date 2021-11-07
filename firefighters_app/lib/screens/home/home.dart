@@ -1,7 +1,7 @@
 import 'package:firefighters_app/screens/home/send_alarm_data.dart';
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
 import 'package:firefighters_app/screens/widgets/text_field_container.dart';
-import 'package:firefighters_app/utilities/constants.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
                     border: InputBorder.none,
                     icon: Icon(
                       Icons.messenger,
-                      color: kMainRedColor,
+                      color: FFAColor.mainRedColor,
                     ),
                   ),
                 ),

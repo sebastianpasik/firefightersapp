@@ -1,7 +1,9 @@
 import 'package:firefighters_app/screens/location.dart';
 import 'package:firefighters_app/screens/widgets/custom_app_bar.dart';
 import 'package:firefighters_app/screens/settings/settings.dart';
-import 'package:firefighters_app/utilities/constants.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
+import 'package:firefighters_app/utilities/resources/ffa_strings.dart';
+
 import 'package:flutter/material.dart';
 
 import 'home/home.dart';
@@ -24,12 +26,12 @@ class _NavigationState extends State<Navigation> {
     return Scaffold(
       appBar: CustomAppBar(
         appBar: AppBar(),
-        titleText: appBarTitles[_currentIndex],
+        titleText: FFAStrings.appBarTitles[_currentIndex],
       ),
-      backgroundColor: kLightGreyBackgroundColor,
+      backgroundColor: FFAColor.lightGreyBackgroundColor,
       body: _fragments[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: kMainRedColor,
+        selectedItemColor: FFAColor.mainRedColor,
         onTap: onItemTapped,
         currentIndex: _currentIndex,
         items: [

@@ -1,4 +1,4 @@
-import 'package:firefighters_app/utilities/constants.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldContainer extends StatelessWidget {
@@ -15,9 +15,9 @@ class TextFieldContainer extends StatelessWidget {
         height: height,
         width: width,
         decoration: BoxDecoration(
-          color: kInputTextBackgroundColor,
+          color: FFAColor.inputTextBackgroundColor,
           border: Border(
-            bottom: BorderSide(color: kMainRedColor),
+            bottom: BorderSide(color: FFAColor.mainRedColor),
           ),
         ),
         child: child);

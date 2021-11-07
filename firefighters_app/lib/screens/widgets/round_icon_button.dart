@@ -1,4 +1,4 @@
-import 'package:firefighters_app/utilities/constants.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
 import 'package:flutter/material.dart';
 
 class RoundIconButton extends StatelessWidget {
@@ -6,7 +6,7 @@ class RoundIconButton extends StatelessWidget {
     this.child,
     this.onPress,
     this.diameter = 57.0,
-    this.fillColor = kMainRedColor,
+    this.fillColor = FFAColor.mainRedColor,
   });
 
   final void Function()? onPress;

@@ -1,5 +1,6 @@
 import 'package:firefighters_app/screens/profile.dart';
-import 'package:firefighters_app/utilities/constants.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
+import 'package:firefighters_app/utilities/resources/ffa_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -10,10 +11,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0.0,
-      backgroundColor: kLightGreyBackgroundColor,
+      backgroundColor: FFAColor.lightGreyBackgroundColor,
       title: Text(
         titleText!,
-        style: kFatAppBarText,
+        style: FFAStyles.fatAppBarText,
       ),
       automaticallyImplyLeading: false,
       actions: <Widget>[
@@ -26,12 +27,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: <Widget>[
                 Icon(
                   Icons.account_circle,
-                  color: kMainRedColor,
+                  color: FFAColor.mainRedColor,
                 ),
                 Text(
                   'Profile',
                   style: TextStyle(
-                    color: kMainRedColor,
+                    color: FFAColor.mainRedColor,
                   ),
                 ),
               ],

@@ -8,8 +8,8 @@ import 'package:firefighters_app/screens/profile.dart';
 import 'package:firefighters_app/screens/registration.dart';
 import 'package:firefighters_app/screens/settings/history.dart';
 import 'package:firefighters_app/screens/settings/settings.dart';
-import 'package:firefighters_app/utilities/constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:workmanager/workmanager.dart';
@@ -88,8 +88,8 @@ class MyApp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme:
-                ThemeData(fontFamily: 'OpenSans', accentColor: kMainRedColor),
+            theme: ThemeData(
+                fontFamily: 'OpenSans', accentColor: FFAColor.mainRedColor),
             initialRoute: Login.id,
             routes: {
               Login.id: (context) => Login(),

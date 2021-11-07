@@ -1,5 +1,5 @@
 import 'package:firefighters_app/screens/widgets/round_icon_button.dart';
-import 'package:firefighters_app/utilities/constants.dart';
+import 'package:firefighters_app/utilities/resources/ffa_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -43,7 +43,7 @@ class _LocationScreenState extends State<LocationScreen> {
         right: 22,
         child: RoundIconButton(
           onPress: _handlePress,
-          fillColor: isPressed ? kMainRedColor : kMainIdleColor,
+          fillColor: isPressed ? FFAColor.mainRedColor : FFAColor.mainIdleColor,
           child: Icon(Icons.fireplace_rounded),
         ),
       ),
@@ -52,7 +52,7 @@ class _LocationScreenState extends State<LocationScreen> {
         right: 22,
         child: RoundIconButton(
           onPress: _trackYourLocation,
-          fillColor: kMainRedColor,
+          fillColor: FFAColor.mainRedColor,
           child: Icon(Icons.gps_fixed_rounded),
         ),
       ),
